@@ -1,0 +1,69 @@
+/*grid areas*/
+
+#line-text {
+    grid-area: line-text;
+}
+
+.switch {
+    grid-area: switch;
+}
+
+.add {
+    grid-area: addLine;
+}
+
+.delete {
+    grid-area: delete;
+}
+
+.lineDown {
+    grid-area: lineDown;
+}
+
+.lineUp {
+    grid-area: lineUp;
+}
+
+.increase {
+    grid-area: increase;
+}
+
+.decrease {
+    grid-area: decrease;
+}
+
+.left {
+    grid-area: left;
+}
+
+.center {
+    grid-area: center;
+}
+
+.right {
+    grid-area: right;
+}
+
+.font {
+    grid-area: font;
+}
+
+.bold {
+    grid-area: bold;
+}
+
+.color {
+    grid-area: color;
+}
+
+.stickers {
+    grid-area: stickers;
+}
+
+.save {
+    grid-area: save;
+}
+
+.share {
+    grid-area: share;
+}

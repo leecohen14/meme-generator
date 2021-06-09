@@ -6,36 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>meme generator lee</title>
+    <title>meme generator lee</title>
+    <link rel="stylesheet" href="css/grid-areas.css">
+    <link rel="stylesheet" href="css/style-utils.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body onload="init()">
-    <div class="main-container">
-        <header class="main-layout">header</header>
+    <header class="main-header">
+        <div class="header-container main-layout flex space-between align-center">
+            <div class="logo">LOGO</div>
+            <ul class="main-nav clean-list flex">
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Memes</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <!-- <button class="btn-menu" onclick="toggleMenu()">☰</button> -->
+        </div>
 
-        <div class="main-layout meme-editor">
-            editor
+    </header>
+    <div class="main-container flex column ">
+        <!-- <header class="main-layout">header</header> -->
+
+        <div class="main-layout meme-editor flex align-center justify-content">
             <div class="canvas-container">
                 <canvas id="my-canvas" height="350" width="350"></canvas>
             </div>
             <div class="canvas-controlers">
-                <button class="increase" onclick="increaseText()">+</button>
-                <button class="decrease" onclick="decreaseText()">-</button>
-                <button class="decrease" onclick="lineUp()">up</button>
-                <button class="decrease" onclick="lineDown()">down</button>
-                <button class="decrease" onclick="switchLine()">switch</button>
+                <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)">
+                <br>
+                <button class="btn switch fa fa-exchange-alt " onclick="switchLine()">S</button>
+                <button class="btn add fa fa-plus" onclick="switchLine()"></button>
+                <button class="btn delete fa fa-trash" onclick="switchLine()"></button>
+                <button class="btn lineDown fa fa-arrow-down" onclick="lineDown()"></button>
+                <button class="btn lineUp fa fa-arrow-up" onclick="lineUp()"></button>
+
+                <button class="btn increase fa" onclick="increaseText()">A+</button>
+                <button class="btn decrease fa" onclick="decreaseText()">A-</button>
+                <button class="btn left fa fa-align-left" onclick="switchLine()"></button>
+                <button class="btn center fa fa-align-center" onclick="switchLine()"></button>
+                <button class="btn right fa fa-align-right" onclick="switchLine()"></button
+                  >
+                  <button class="btn font" onclick="switchLine()">F</button>
+                <button class="btn bold fa fa-bold" onclick="switchLine()"></button>
+                <button class="btn color fa fa-paint-brush" onclick="switchLine()"></button>
+                <button class="btn stickers" onclick="switchLine()">stickers</button>
+                <button class="btn save fa fa-save" onclick="switchLine()"></button>
+                <button class="btn share fa fa-share" onclick="switchLine()"></button>
 
             </div>
+            <br>
         </div>
 
-        <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)">
 
         <br><br>
-        <div class="main-layout gallery-container">
-            gallery <br>
+        <div class="main-layout gallery-container" style="display: none;">
+            <!-- gallery <br>
             <img src="img/1.jpg" alt="" onclick="onSetImg(1)">
             <img src="img/2.jpg" alt="" onclick="onSetImg(2)">
-            <img src="img/3.jpg" alt="" onclick="onSetImg(3)">
+            <img src="img/3.jpg" alt="" onclick="onSetImg(3)"> -->
         </div>
 
 

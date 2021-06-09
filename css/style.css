@@ -1,25 +1,115 @@
-* {
-    box-sizing: border-box;
+#my-canvas {
+    /* background-color: green; */
+    /* text-align: left; */
+    border-radius: 2px;
 }
 
-.canvas-container {
-    /* background-color: green; */
-    text-align: left;
+.main-container {
+    width: 100vw;
+    background-color: rgb(255, 229, 204);
+}
+
+.main-layout {
+    width: 100vw;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-gap: 10px;
 }
 
 #my-canvas {
     background-color: rgb(235, 235, 235);
+    margin-right: 30px;
+}
+
+.meme-editor {
+    margin-top: 20px;
 }
 
 .gallery-container img {
     width: 120px;
     height: 120px;
+    border-radius: 4px;
 }
 
 .gallery-container img:hover {
     cursor: pointer;
 }
 
-button {
+.canvas-controlers {
+    /* width: 100%; */
+    display: grid;
+    width: 100vw;
+    max-width: 365px;
+    grid-template-columns: repeat(5, minmax(3rem, 1fr));
+    grid-template-rows: repeat(6, minmax(3rem, 1fr));
+    grid-template-areas: "line-text line-text line-text line-text line-text " " switch addLine delete lineDown lineUp" " increase decrease left center right" " font font font bold color " " stickers stickers stickers stickers stickers" "save save . share share";
+    grid-gap: 10px;
+    /* grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); */
+}
+
+.btn {
     cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    /* width: 30px;
+    height: 30px; */
+}
+
+button.fa {
+    font-size: 2rem;
+}
+
+
+/*grid areas*/
+
+
+/* main-header */
+
+.main-header {
+    background-color: #f77f02;
+    /* height: 130px; */
+    /* height: 7.8125rem; */
+    /* box-shadow: inset 0px -6px 0px 0px #1d1d1d; */
+    /* margin-bottom: 6px; */
+}
+
+.main-header .logo {
+    color: white;
+    /* font-family: eurof, sans-serif; */
+    font-size: 2.5em;
+}
+
+.main-header .main-nav {
+    font-size: 1rem;
+    /* font-family: Lato-Bold, sans-serif; */
+}
+
+.main-header .main-nav a {
+    display: block;
+    padding: 1.5em;
+    color: white;
+    /* border-right: 2px solid #1d1d1d; */
+    /* border-bottom: 7px solid #1e1e1e; */
+    text-transform: uppercase;
+}
+
+
+/* .main-header .main-nav li:first-child a {
+    border-left: 2px solid #1d1d1d;
+} */
+
+.main-header .main-nav li:hover a {
+    color: rgb(7, 7, 7);
+}
+
+.main-header .main-nav li {
+    text-align: center;
+}
+
+.main-header .main-nav .current-page {
+    box-shadow: inset 0px -6px 0px 0px rgb(35, 221, 82);
 }
