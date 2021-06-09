@@ -9,8 +9,24 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-    <p>work</p>
+<body onload="init()">
+    <div class="main-container">
+        <header class="main-layout">header</header>
+        <div class="main-layout gallery-container" hidden>
+            gallery
+        </div>
+        <div class="main-layout meme-editor">
+            editor
+            <div class="canvas-container">
+                <canvas id="my-canvas" height="350" width="350" onclick="draw(event)"></canvas>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
     <script src="js/services/meme-service.js"></script>
     <script src="js/main.js"></script>
 </body>
