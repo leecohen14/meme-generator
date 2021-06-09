@@ -15,3 +15,8 @@ function init() {
 function onSetImg(id) {
     setImg(id);
 }
+
+function setInputFirstValue() {
+    var elInput = document.querySelector('input');
+    elInput.value = gMeme.lines[gMeme.selectedLineIdx].txt;
+}

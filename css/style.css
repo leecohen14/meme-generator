@@ -19,3 +19,7 @@
 .gallery-container img:hover {
     cursor: pointer;
 }
+
+button {
+    cursor: pointer;
+}

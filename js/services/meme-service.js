@@ -7,10 +7,12 @@ var gMeme = {
     selectedLineIdx: 0,
 
     lines: [{
-        txt: 'I never eat Falafel',
-        size: 20,
+        txt: 'Type here',
+        size: 30,
         align: 'left',
-        color: 'red'
+        color: 'red',
+        textWidth: 0,
+        y: 40
     }]
 }
 var gElCanvas;
@@ -24,6 +26,7 @@ function drawImg() {
         clearCanvas();
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         drawText();
+        setInputFirstValue();
     }
 }
 
@@ -31,19 +34,19 @@ function drawText(x = 40, y = 40) {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
-    gCtx.font = '40px IMPACT'
-        // gCtx.textAlign = 'center'
+    var gCurrLineSize = gMeme.lines[gMeme.selectedLineIdx].size;
+    gCtx.font = `${gCurrLineSize}px IMPACT`;
+    // gCtx.textAlign = 'center'
     var gCurrLineText = gMeme.lines[gMeme.selectedLineIdx].txt;
-    var textWidth = gCtx.measureText(gCurrLineText).width
-
-    gCtx.fillText(gCurrLineText, (gElCanvas.width - textWidth) / 2, y)
-    gCtx.strokeText(gCurrLineText, (gElCanvas.width - textWidth) / 2, y)
-    console.log('gCurrLineText.neasureText() :>> ');
+    gMeme.lines[gMeme.selectedLineIdx].textWidth = gCtx.measureText(gCurrLineText).width
+    var gTextWidth = gMeme.lines[gMeme.selectedLineIdx].textWidth;
+    var gCurrLineY = gMeme.lines[gMeme.selectedLineIdx].y;
+    gCtx.fillText(gCurrLineText, (gElCanvas.width - gTextWidth) / 2, gCurrLineY)
+    gCtx.strokeText(gCurrLineText, (gElCanvas.width - gTextWidth) / 2, gCurrLineY)
 }
 
 function updateLineText(el) {
     var text = el.value;
-    console.log('text :>> ', text);
     // get the curr meme id
     gMeme.lines[gMeme.selectedLineIdx].txt = text;
     drawImg();
@@ -61,5 +64,26 @@ function clearCanvas() {
 
 function setImg(id) {
     gMeme.selectedImgId = id;
+    drawImg();
+}
+
+function increaseText() {
+    gMeme.lines[gMeme.selectedLineIdx].size += 5;
+    drawImg();
+}
+
+function decreaseText() {
+    gMeme.lines[gMeme.selectedLineIdx].size -= 5;
+    drawImg();
+}
+
+function lineUp() {
+    gMeme.lines[gMeme.selectedLineIdx].y -= 5;
+    drawImg();
+
+}
+
+function lineDown() {
+    gMeme.lines[gMeme.selectedLineIdx].y += 5;
     drawImg();
 }

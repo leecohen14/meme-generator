@@ -18,12 +18,19 @@
             <div class="canvas-container">
                 <canvas id="my-canvas" height="350" width="350"></canvas>
             </div>
+            <div class="canvas-controlers">
+                <button class="increase" onclick="increaseText()">+</button>
+                <button class="decrease" onclick="decreaseText()">-</button>
+                <button class="decrease" onclick="lineUp()">up</button>
+                <button class="decrease" onclick="lineDown()">down</button>
+            </div>
         </div>
 
         <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)">
 
         <br><br>
         <div class="main-layout gallery-container">
+            gallery <br>
             <img src="img/1.jpg" alt="" onclick="onSetImg(1)">
             <img src="img/2.jpg" alt="" onclick="onSetImg(2)">
             <img src="img/3.jpg" alt="" onclick="onSetImg(3)">
