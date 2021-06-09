@@ -7,13 +7,29 @@ var gMeme = {
     selectedLineIdx: 0,
 
     lines: [{
-        txt: 'Type here',
-        size: 30,
-        align: 'left',
-        color: 'red',
-        textWidth: 0,
-        y: 40
-    }]
+            txt: 'first line',
+            size: 30,
+            align: 'left',
+            color: 'red',
+            textWidth: 0,
+            y: 40
+        }, {
+            txt: 'second line',
+            size: 30,
+            align: 'left',
+            color: 'red',
+            textWidth: 0,
+            y: 160
+        },
+        {
+            txt: 'third line',
+            size: 30,
+            align: 'left',
+            color: 'red',
+            textWidth: 0,
+            y: 300
+        }
+    ]
 }
 var gElCanvas;
 var gCtx;
@@ -25,12 +41,13 @@ function drawImg() {
     img.onload = () => {
         clearCanvas();
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText();
+            // drawText();
+        drawAllLines();
         setInputFirstValue();
     }
 }
 
-function drawText(x = 40, y = 40) {
+function drawText() {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
@@ -43,6 +60,19 @@ function drawText(x = 40, y = 40) {
     var gCurrLineY = gMeme.lines[gMeme.selectedLineIdx].y;
     gCtx.fillText(gCurrLineText, (gElCanvas.width - gTextWidth) / 2, gCurrLineY)
     gCtx.strokeText(gCurrLineText, (gElCanvas.width - gTextWidth) / 2, gCurrLineY)
+}
+
+function drawAllLines() {
+    //run over all lines
+    //do draw text
+    gMeme.lines.forEach(() => {
+        drawText();
+        if (gMeme.selectedLineIdx + 1 < gMeme.lines.length) {
+            gMeme.selectedLineIdx++;
+        } else {
+            gMeme.selectedLineIdx = 0;
+        }
+    })
 }
 
 function updateLineText(el) {
@@ -85,5 +115,12 @@ function lineUp() {
 
 function lineDown() {
     gMeme.lines[gMeme.selectedLineIdx].y += 5;
+    drawImg();
+}
+
+function switchLine() {
+    console.log('line switched');
+    var linesLength = gMeme.lines.length;
+    gMeme.selectedLineIdx = (gMeme.selectedLineIdx + 1 === linesLength) ? 0 : gMeme.selectedLineIdx + 1;
     drawImg();
 }
