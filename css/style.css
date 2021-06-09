@@ -10,3 +10,12 @@
 #my-canvas {
     background-color: rgb(235, 235, 235);
 }
+
+.gallery-container img {
+    width: 120px;
+    height: 120px;
+}
+
+.gallery-container img:hover {
+    cursor: pointer;
+}
