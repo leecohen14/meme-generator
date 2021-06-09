@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>meme generator lee</title>
-    <title>meme generator lee</title>
+
     <link rel="stylesheet" href="css/grid-areas.css">
     <link rel="stylesheet" href="css/style-utils.css">
     <link rel="stylesheet" href="css/style.css">
@@ -19,8 +19,8 @@
         <div class="header-container main-layout flex space-between align-center">
             <div class="logo">MEMEREATOR</div>
             <ul class="main-nav clean-list flex">
-                <li onclick="mainToggle()"><a href="#">Gallery</a></li>
-                <li><a href="#">Memes</a></li>
+                <li onclick="showGallery(), hideMemes()"><a href="#">Gallery</a></li>
+                <li onclick="showMemes()"><a href="#">Memes</a></li>
                 <li><a href="#">About</a></li>
             </ul>
             <!-- <button class="btn-menu" onclick="toggleMenu()">☰</button> -->
@@ -59,8 +59,8 @@
                 <button class="btn share" onclick="switchLine()"><img src="icons/share-icon.png" alt=""></button>
 
             </div>
-
         </div>
+        <div class="main-layout memes-container" style="display: none;"></div>
 
 
 

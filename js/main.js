@@ -1,6 +1,9 @@
 'use strict'
 console.log('work');
-
+var gElCanvas;
+var gCtx;
+var gStartPos;
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
 
 
 function init() {
@@ -9,6 +12,8 @@ function init() {
     gCtx = gElCanvas.getContext('2d')
         // resizeCanvas()
     drawImg();
+    renderMemes();
+    addListeners();
     // renderCanvas();
     // gElCanvas.textAlign = "center";
 }
@@ -29,25 +34,44 @@ function renderGalleryImgs() {
     var strHtml = '';
     gImgs.forEach((img) => {
             // ` <img src="${img.url}" alt="" onclick="onSetImg(1)"> `;
-            strHtml += `<img src="${img.url}" alt="" onclick="onSetImg(${img.id}),mainToggle()">`;
+            strHtml += `<img src="${img.url}" alt="" onclick="onSetImg(${img.id}),showEditor()">`;
         })
         // console.log('strHtml :>> ', strHtml);
     elGallery.innerHTML = strHtml;
 }
 
-function mainToggle() {
-    toggleGallery()
-    toggleEditor()
-}
-
-function toggleGallery() {
+function hideGallery() {
+    hideEditor();
     var elGallery = document.querySelector('.gallery-container');
-    elGallery.style.display = (elGallery.style.display === 'none') ? 'grid' : 'none';
+    elGallery.style.display = 'none';
 }
 
-function toggleEditor() {
+function showGallery() {
+    var elGallery = document.querySelector('.gallery-container');
+    elGallery.style.display = 'grid';
+}
+
+function showEditor() {
+    hideGallery();
     var elEditor = document.querySelector('.meme-editor');
-    elEditor.style.display = (elEditor.style.display === 'none') ? 'flex' : 'none';
+    elEditor.style.display = 'flex';
+}
+
+function hideEditor() {
+    var elEditor = document.querySelector('.meme-editor');
+    elEditor.style.display = 'none';
+}
+
+function showMemes() {
+    hideEditor();
+    hideGallery();
+    var elMemes = document.querySelector('.memes-container');
+    elMemes.style.display = 'block';
+}
+
+function hideMemes() {
+    var elMemes = document.querySelector('.memes-container');
+    elMemes.style.display = 'none';
 }
 
 function downloadCanvas(elLink) {
@@ -58,5 +82,87 @@ function downloadCanvas(elLink) {
 }
 
 function saveCanvas() {
-    saveCanvasToStorage()
+    saveCanvasToStorage();
+    renderMemes();
+}
+
+function renderMemes() {
+    updateGMemes();
+    var strHtml = ``;
+    gMemes.forEach(memeUrl => {
+        strHtml += ` <img src="${memeUrl}" alt="a" height="200" width="200"> `;
+    })
+    var elMemes = document.querySelector('.memes-container');
+    elMemes.innerHTML = strHtml;
+}
+
+//drag and drop
+
+
+function addMouseListeners() {
+    gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
+function addListeners() {
+    addMouseListeners();
+    addTouchListeners();
+}
+
+function onDown(ev) {
+
+    console.log('onDown');
+    const pos = getEvPos(ev)
+    if (!isLineClicked(pos)) return
+    console.log('line!');
+
+    setLineDrag(true)
+    setEverDragged();
+    gStartPos = pos
+    document.body.style.cursor = 'grabbing'
+}
+
+function onMove(ev) {
+    const line = gGrabbedLine;
+    if (!gGrabbedLine) return;
+    if (line.isDrag) {
+        const pos = getEvPos(ev)
+        const dx = pos.x - gStartPos.x
+        const dy = pos.y - gStartPos.y
+            // console.log('dx :>> ', dx);
+            // console.log('dy :>> ', dy);
+        moveLine(dx, dy)
+        gStartPos = pos
+            // renderCanvas();
+            // drawAllLines();
+        drawImg();
+    }
+}
+
+function onUp() {
+    setLineDrag(false)
+    document.body.style.cursor = 'grab';
+}
+
+function getEvPos(ev) {
+    var pos = {
+        x: ev.offsetX,
+        y: ev.offsetY
+    }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
+    return pos;
 }
