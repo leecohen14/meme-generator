@@ -4,15 +4,6 @@
     border-radius: 2px;
 }
 
-.main-container {
-    width: 100vw;
-    background-color: rgb(255, 229, 204);
-}
-
-.main-layout {
-    width: 100vw;
-}
-
 .gallery-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -26,6 +17,11 @@
 
 .meme-editor {
     margin-top: 20px;
+}
+
+.gallery-container {
+    margin: 20px;
+    width: 90vw;
 }
 
 .gallery-container img {
@@ -45,7 +41,7 @@
     max-width: 365px;
     grid-template-columns: repeat(5, minmax(3rem, 1fr));
     grid-template-rows: repeat(6, minmax(3rem, 1fr));
-    grid-template-areas: "line-text line-text line-text line-text line-text " " switch addLine delete lineDown lineUp" " increase decrease left center right" " font font font bold color " " stickers stickers stickers stickers stickers" "save save . share share";
+    grid-template-areas: "line-text line-text line-text line-text line-text " " switch addLine delete lineDown lineUp" " increase decrease left center right" " font font font stroke color " " stickers stickers stickers stickers stickers" "save save download share share";
     grid-gap: 10px;
     /* grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); */
 }
@@ -59,8 +55,8 @@
     height: 30px; */
 }
 
-button.fa {
-    font-size: 2rem;
+.btn:hover {
+    background-color: #ffcd98;
 }
 
 
@@ -88,9 +84,14 @@ button.fa {
     /* font-family: Lato-Bold, sans-serif; */
 }
 
+.header-container {
+    width: 95vw;
+}
+
 .main-header .main-nav a {
     display: block;
     padding: 1.5em;
+    /* padding-left: 1.5em 1.5em 1.5em 0; */
     color: white;
     /* border-right: 2px solid #1d1d1d; */
     /* border-bottom: 7px solid #1e1e1e; */

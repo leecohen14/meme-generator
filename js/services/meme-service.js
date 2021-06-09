@@ -50,6 +50,7 @@ var gMeme = {
         }
     ]
 }
+var gMemes = [];
 var gElCanvas;
 var gCtx;
 
@@ -144,4 +145,10 @@ function switchLine() {
     var linesLength = gMeme.lines.length;
     gMeme.selectedLineIdx = (gMeme.selectedLineIdx + 1 === linesLength) ? 0 : gMeme.selectedLineIdx + 1;
     drawImg();
+}
+
+function saveCanvasToStorage() {
+    const data = gElCanvas.toDataURL();
+    gMemes.push(data);
+    saveToStorage('memes', gMemes);
 }

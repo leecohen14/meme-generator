@@ -3,6 +3,7 @@
 }
 
 body {
+    background-color: rgb(255, 229, 204);
     margin: 0;
 }
 
@@ -25,6 +26,11 @@ input {
     border-radius: 8px;
     border: none;
     padding: 10px;
+}
+
+button img {
+    width: 70%;
+    max-width: 37.09px;
 }
 
 

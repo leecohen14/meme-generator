@@ -15,11 +15,11 @@
 </head>
 
 <body onload="init()">
-    <header class="main-header">
+    <header class="main-header flex justify-content">
         <div class="header-container main-layout flex space-between align-center">
-            <div class="logo">LOGO</div>
+            <div class="logo">MEMEREATOR</div>
             <ul class="main-nav clean-list flex">
-                <li><a href="#">Gallery</a></li>
+                <li onclick="mainToggle()"><a href="#">Gallery</a></li>
                 <li><a href="#">Memes</a></li>
                 <li><a href="#">About</a></li>
             </ul>
@@ -27,8 +27,9 @@
         </div>
 
     </header>
-    <div class="main-container flex column ">
+    <div class="main-container flex column justify-content align-center">
         <!-- <header class="main-layout">header</header> -->
+        <div class="main-layout gallery-container" style="display:none"></div>
 
         <div class="main-layout meme-editor flex align-center justify-content">
             <div class="canvas-container">
@@ -37,42 +38,38 @@
             <div class="canvas-controlers">
                 <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)">
                 <br>
-                <button class="btn switch fa fa-exchange-alt " onclick="switchLine()">S</button>
-                <button class="btn add fa fa-plus" onclick="switchLine()"></button>
-                <button class="btn delete fa fa-trash" onclick="switchLine()"></button>
+                <button class="btn switch" onclick="switchLine()"><img src="icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
+                <button class="btn add" onclick="switchLine()"><img src="icons/add.png" alt=""></button>
+                <button class="btn delete" onclick="switchLine()"><img src="icons/trash.png" alt=""></button>
                 <button class="btn lineDown fa fa-arrow-down" onclick="lineDown()"></button>
                 <button class="btn lineUp fa fa-arrow-up" onclick="lineUp()"></button>
 
-                <button class="btn increase fa" onclick="increaseText()">A+</button>
-                <button class="btn decrease fa" onclick="decreaseText()">A-</button>
-                <button class="btn left fa fa-align-left" onclick="switchLine()"></button>
-                <button class="btn center fa fa-align-center" onclick="switchLine()"></button>
-                <button class="btn right fa fa-align-right" onclick="switchLine()"></button
-                  >
-                  <button class="btn font" onclick="switchLine()">F</button>
-                <button class="btn bold fa fa-bold" onclick="switchLine()"></button>
-                <button class="btn color fa fa-paint-brush" onclick="switchLine()"></button>
+                <button class="btn increase" onclick="increaseText()"><img src="icons/increase font - icon.png" alt="">
+                </button>
+                <button class="btn decrease" onclick="decreaseText()"><img src="icons/decrease font - icon.png" alt=""></button>
+                <button class="btn left" onclick="switchLine()"><img src="icons/align-to-left.png" alt=""></button>
+                <button class="btn center" onclick="switchLine()"><img src="icons/center-text-alignment.png" alt=""></button>
+                <button class="btn right" onclick="switchLine()"><img src="icons/align-to-right.png" alt=""></button></button>
+                <button class="btn font" onclick="switchLine()">F</button>
+                <button class="btn stroke" onclick="switchLine()"><img src="icons/text stroke.png" alt=""></button>
+                <button class="btn color" onclick="switchLine()"><img src="icons/paint-board-and-brush.png" alt=""></button>
                 <button class="btn stickers" onclick="switchLine()">stickers</button>
-                <button class="btn save fa fa-save" onclick="switchLine()"></button>
-                <button class="btn share fa fa-share" onclick="switchLine()"></button>
+                <button class="btn save" onclick="saveCanvas()"><img src="icons/save-icon.png" alt=""></button>
+                <button class="btn download" onclick="switchLine()"><a href="#" onclick="downloadCanvas(this)" download="file-name"><img src="icons/download.png" alt=""></a></button>
+                <button class="btn share" onclick="switchLine()"><img src="icons/share-icon.png" alt=""></button>
 
             </div>
-            <br>
+
         </div>
 
 
-        <br><br>
-        <div class="main-layout gallery-container" style="display: none;">
-            <!-- gallery <br>
-            <img src="img/1.jpg" alt="" onclick="onSetImg(1)">
-            <img src="img/2.jpg" alt="" onclick="onSetImg(2)">
-            <img src="img/3.jpg" alt="" onclick="onSetImg(3)"> -->
-        </div>
 
 
 
 
     </div>
+
+    <script src="js/services/storage-service.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/main.js"></script>
 </body>

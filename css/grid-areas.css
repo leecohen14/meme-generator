@@ -48,8 +48,8 @@
     grid-area: font;
 }
 
-.bold {
-    grid-area: bold;
+.stroke {
+    grid-area: stroke;
 }
 
 .color {
@@ -66,4 +66,8 @@
 
 .share {
     grid-area: share;
+}
+
+.download {
+    grid-area: download;
 }
