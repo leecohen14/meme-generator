@@ -83,6 +83,7 @@ function drawImg() {
 }
 
 function drawText() {
+    if (gMeme.lines.length === 0) return;
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
     gCtx.lineWidth = 2
     gCtx.strokeStyle = gCurrLine.stroke;
@@ -119,6 +120,7 @@ function drawAllLines() {
 function updateLineText(el) {
     var text = el.value;
     // get the curr meme id
+    if (gMeme.lines.length === 0) return;
     gMeme.lines[gMeme.selectedLineIdx].txt = text;
     drawImg();
     // renderCanvas()
@@ -223,13 +225,37 @@ function setFilter(filterBy) {
 // color
 
 function updateColor(color) {
-    console.log('object :>> ', gCurrLine.color);
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCurrLine.color = color
-    console.log('object :>> ', gCurrLine.color);
 }
 
 function updateStroke(color) {
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCurrLine.stroke = color
+}
+
+//add new line
+
+function addNewLine() {
+    var line = {
+        txt: '',
+        size: 30,
+        align: 'left',
+        color: 'white',
+        stroke: 'black',
+        textWidth: 0,
+        x: 0,
+        y: 160,
+        isDrag: false,
+        everDragged: false
+    }
+    gMeme.lines.push(line);
+    gMeme.selectedLineIdx = gMeme.lines.length - 1;
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+}
+
+//delete line
+function deleteLine() {
+    var idx = gMeme.selectedLineIdx;
+    gMeme.lines.splice(idx, 1);
 }

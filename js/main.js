@@ -24,6 +24,7 @@ function onSetImg(id) {
 
 function setInputFirstValue() {
     var elInput = document.querySelector('input');
+    if (gMeme.lines.length === 0) return;
     elInput.value = gMeme.lines[gMeme.selectedLineIdx].txt;
 }
 
@@ -187,8 +188,21 @@ function onSetFilter(txt) {
 //color
 function onUpdateColor(el) {
     updateColor(el.value);
+    drawImg();
 }
 
 function onUpdateStroke(el) {
     updateStroke(el.value);
+    drawImg();
+}
+
+// add new line
+function onAddNewLine() {
+    addNewLine();
+}
+
+//delete line
+function onDeleteLine() {
+    deleteLine();
+    drawImg();
 }
