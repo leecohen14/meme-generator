@@ -22,9 +22,17 @@ ul {
     margin: 0;
 }
 
-input {
+.filter input {
+    background-color: rgb(255, 229, 204);
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+
+.canvas-controlers input {
     border-radius: 8px;
     border: none;
+    padding: 0;
     padding: 10px;
 }
 

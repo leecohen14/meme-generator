@@ -26,11 +26,16 @@
             </ul>
             <button class="btn-menu" onclick="toggleMenu()">☰</button>
         </div>
-
     </header>
     <div class="main-container flex column justify-content align-center">
         <!-- <header class="main-layout">header</header> -->
-        <div class="main-layout gallery-container" style="display:none"></div>
+        <div class="gallery-container main-layout flex column" style="display:none">
+            <section class="filter">
+                <input type="text" placeholder="Start typing" oninput="onSetFilter(this.value)" />
+            </section>
+            <div class="main-layout gallery"></div>
+        </div>
+
 
         <div class="main-layout meme-editor flex align-center justify-content">
             <div class="canvas-container">
@@ -52,8 +57,14 @@
                 <button class="btn center" onclick="switchLine()"><img src="icons/center-text-alignment.png" alt=""></button>
                 <button class="btn right" onclick="switchLine()"><img src="icons/align-to-right.png" alt=""></button></button>
                 <button class="btn font" onclick="switchLine()">F</button>
-                <button class="btn stroke" onclick="switchLine()"><img src="icons/text stroke.png" alt=""></button>
-                <button class="btn color" onclick="switchLine()"><img src="icons/paint-board-and-brush.png" alt=""></button>
+                <button class="btn stroke">
+                    <img src="icons/text stroke.png" alt="">
+                    <input type="color" id="text-stroke" name="text-stroke" oninput="onUpdateStroke(this)">
+                </button>
+                <button class="btn color">
+                    <img src="icons/paint-board-and-brush.png" alt="">
+                    <input type="color" id="text-color" name="text-color" oninput="onUpdateColor(this)">
+                </button>
                 <button class="btn stickers" onclick="switchLine()">stickers</button>
                 <button class="btn save" onclick="saveCanvas()"><img src="icons/save-icon.png" alt=""></button>
                 <button class="btn download" onclick="switchLine()"><a href="#" onclick="downloadCanvas(this)" download="file-name"><img src="icons/download.png" alt=""></a></button>

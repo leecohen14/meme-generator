@@ -29,7 +29,8 @@ var gMeme = {
             txt: '',
             size: 30,
             align: 'left',
-            color: 'red',
+            color: 'white',
+            stroke: 'black',
             textWidth: 0,
             x: 0,
             y: 40,
@@ -39,7 +40,8 @@ var gMeme = {
             txt: '',
             size: 30,
             align: 'left',
-            color: 'red',
+            color: 'white',
+            stroke: 'black',
             textWidth: 0,
             x: 0,
             y: 160,
@@ -50,7 +52,8 @@ var gMeme = {
             txt: '',
             size: 30,
             align: 'left',
-            color: 'red',
+            color: 'white',
+            stroke: 'black',
             textWidth: 0,
             x: 0,
             y: 300,
@@ -60,7 +63,10 @@ var gMeme = {
 }
 var gMemes = [];
 var gGrabbedLine = '';
-
+var gFilterBy = {
+    txt: '',
+}
+var gCurrLine;
 
 
 function drawImg() {
@@ -77,10 +83,10 @@ function drawImg() {
 }
 
 function drawText() {
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
-    var gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
+    gCtx.strokeStyle = gCurrLine.stroke;
+    gCtx.fillStyle = gCurrLine.color;
     var gCurrLineSize = gCurrLine.size;
     gCtx.font = `${gCurrLineSize}px IMPACT`;
     // gCtx.textAlign = 'center'
@@ -186,12 +192,6 @@ function isLineClicked(clickedPos) {
     return line[0];
 }
 
-
-//
-// return ((pos.x+line.textWidth > clickedPos.x && clickedPos.x>pos.x) &&
-//  (pos.y+line.size > clickedPos.y && clickedPos.y > y))
-//
-
 function setLineDrag(isDrag) {
     gGrabbedLine.isDrag = isDrag;
 }
@@ -204,4 +204,32 @@ function moveLine(dx, dy) {
 
 function setEverDragged() {
     gGrabbedLine.everDragged = true;
+}
+
+// search filter
+
+function getImages() {
+    var regex = new RegExp(gFilterBy.txt, 'i');
+    var images = gImgs.filter(img => {
+        return regex.test(img.name);
+    })
+    return images
+}
+
+function setFilter(filterBy) {
+    gFilterBy = filterBy;
+}
+
+// color
+
+function updateColor(color) {
+    console.log('object :>> ', gCurrLine.color);
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    gCurrLine.color = color
+    console.log('object :>> ', gCurrLine.color);
+}
+
+function updateStroke(color) {
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    gCurrLine.stroke = color
 }

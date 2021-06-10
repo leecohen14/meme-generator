@@ -30,9 +30,11 @@ function setInputFirstValue() {
 function renderGalleryImgs() {
     //run all over the gImgs
     // inject img tags with all imgs
-    var elGallery = document.querySelector('.gallery-container');
+
+    var images = getImages();
+    var elGallery = document.querySelector('.gallery');
     var strHtml = '';
-    gImgs.forEach((img) => {
+    images.forEach((img) => {
             // ` <img src="${img.url}" alt="" onclick="onSetImg(1)"> `;
             strHtml += `<img src="${img.url}" alt="" onclick="onSetImg(${img.id}),showEditor()">`;
         })
@@ -172,4 +174,21 @@ function getEvPos(ev) {
         }
     }
     return pos;
+}
+
+//filter
+
+function onSetFilter(txt) {
+    console.log('set');
+    setFilter({ txt: txt })
+    renderGalleryImgs();
+}
+
+//color
+function onUpdateColor(el) {
+    updateColor(el.value);
+}
+
+function onUpdateStroke(el) {
+    updateStroke(el.value);
 }
