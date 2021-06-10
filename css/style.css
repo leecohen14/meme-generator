@@ -59,6 +59,14 @@
     background-color: #ffcd98;
 }
 
+.btn-menu {
+    display: none;
+    color: white;
+    background-color: #f77f02;
+    border: none;
+    font-size: 30px;
+}
+
 
 /*grid areas*/
 
@@ -113,4 +121,40 @@
 
 .main-header .main-nav .current-page {
     box-shadow: inset 0px -6px 0px 0px rgb(35, 221, 82);
+}
+
+
+/*mobile only mnu*/
+
+@media (max-width: 770px) {
+    .meme-editor {
+        flex-direction: column;
+        margin: 20px;
+    }
+    .canvas-controlers {
+        grid-template-columns: repeat(5, minmax(20px, 1fr));
+        grid-template-rows: repeat(6, minmax(20px, 1fr));
+    }
+    #my-canvas {
+        margin-right: 0;
+        margin-bottom: 30px;
+        width: 350px;
+        height: 350px;
+    }
+    .main-header .main-nav {
+        display: none;
+    }
+    .main-header {
+        height: 60px;
+    }
+    .btn-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 360px) {
+    #my-canvas {
+        width: 250px;
+        height: 250px;
+    }
 }

@@ -49,6 +49,7 @@ function hideGallery() {
 function showGallery() {
     var elGallery = document.querySelector('.gallery-container');
     elGallery.style.display = 'grid';
+    hideEditor();
 }
 
 function showEditor() {
@@ -115,16 +116,11 @@ function addTouchListeners() {
 function addListeners() {
     addMouseListeners();
     addTouchListeners();
-    console.log('added listeners :>> ');
 }
 
 function onDown(ev) {
-
-    console.log('onDown');
     const pos = getEvPos(ev)
     if (!isLineClicked(pos)) return
-    console.log('line!');
-
     setLineDrag(true)
     setEverDragged();
     gStartPos = pos

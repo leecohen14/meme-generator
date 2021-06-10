@@ -44,6 +44,10 @@ button img {
     flex-direction: column;
 }
 
+.row {
+    flex-direction: row;
+}
+
 .flex.justify-content {
     justify-content: center;
 }

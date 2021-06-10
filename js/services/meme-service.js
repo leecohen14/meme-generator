@@ -88,7 +88,6 @@ function drawText() {
     gCurrLine.textWidth = gCtx.measureText(gCurrLineText).width;
     var gTextWidth = gCurrLine.textWidth;
     var gCurrLineY = gCurrLine.y;
-    console.log('gGrabbedLine.everDragged :>> ', gGrabbedLine.everDragged);
     if (!gCurrLine.everDragged) {
         gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
     }
@@ -177,16 +176,11 @@ function updateGMemes() {
 // drag and drop
 
 function isLineClicked(clickedPos) {
-    console.log('clickedPos :>> ', clickedPos);
     var line = gMeme.lines.filter((line) => {
         const pos = { x: line.x, y: line.y };
-        console.log('pos.y :>> ', pos.y);
-        console.log('line.size :>> ', line.size);
-        console.log('clickedPos.y :>> ', clickedPos.y);
         return ((pos.x + line.textWidth > clickedPos.x && clickedPos.x > pos.x) &&
             (clickedPos.y > pos.y - line.size && pos.y > clickedPos.y))
     });
-    console.log('line[0] :>> ', line[0]);
     gGrabbedLine = line[0];
     return line[0];
 }
