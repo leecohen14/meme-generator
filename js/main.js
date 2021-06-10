@@ -12,8 +12,8 @@ function init() {
     gCtx = gElCanvas.getContext('2d')
         // resizeCanvas()
     drawImg();
-    renderMemes();
     addListeners();
+    renderMemes();
     // renderCanvas();
     // gElCanvas.textAlign = "center";
 }
@@ -89,6 +89,7 @@ function saveCanvas() {
 function renderMemes() {
     updateGMemes();
     var strHtml = ``;
+    if (!gMemes) return;
     gMemes.forEach(memeUrl => {
         strHtml += ` <img src="${memeUrl}" alt="a" height="200" width="200"> `;
     })
@@ -114,6 +115,7 @@ function addTouchListeners() {
 function addListeners() {
     addMouseListeners();
     addTouchListeners();
+    console.log('added listeners :>> ');
 }
 
 function onDown(ev) {

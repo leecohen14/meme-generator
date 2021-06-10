@@ -59,7 +59,7 @@ var gMeme = {
     ]
 }
 var gMemes = [];
-var gGrabbedLine = false;
+var gGrabbedLine = '';
 
 
 
@@ -175,10 +175,6 @@ function updateGMemes() {
 }
 
 // drag and drop
-
-function getCircle() {
-    return gCircle
-}
 
 function isLineClicked(clickedPos) {
     console.log('clickedPos :>> ', clickedPos);
