@@ -70,6 +70,7 @@ var gFilterBy = {
     txt: '',
 }
 var gCurrLine;
+//gMakeId
 
 
 function drawImg() {
@@ -87,7 +88,7 @@ function drawImg() {
 
 function drawText() {
     if (gMeme.lines.length === 0) return;
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCtx.lineWidth = 2
     gCtx.strokeStyle = gCurrLine.stroke;
     gCtx.fillStyle = gCurrLine.color;
@@ -120,11 +121,19 @@ function drawAllLines() {
     })
 }
 
+function cleanInput() {
+    var elInput = document.querySelector('#line-text');
+    elInput.value = '';
+}
+
 function updateLineText(el) {
+
+    if (gMeme.lines.length === 0) { // if has no lines!
+        cleanInput();
+        return;
+    }
     var text = el.value;
     // get the curr meme id
-    if (gMeme.lines.length === 0) return;
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
     gCurrLine.txt = text;
     drawImg();
     // renderCanvas()
@@ -175,9 +184,15 @@ function switchLine() {
 
 }
 
+//save canvas to storage
 function saveCanvasToStorage() {
     const data = gElCanvas.toDataURL();
-    gMemes.push(data);
+    var meme = {
+        id: `${_makeId()}`,
+        data,
+        meme: _.cloneDeep(gMeme) //make deep copy
+    }
+    gMemes.push(meme);
     saveToStorage('memes', gMemes);
 }
 
@@ -229,12 +244,10 @@ function setFilter(filterBy) {
 // color
 
 function updateColor(color) {
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCurrLine.color = color
 }
 
 function updateStroke(color) {
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCurrLine.stroke = color
 }
 
@@ -257,6 +270,7 @@ function addNewLine() {
     gMeme.lines.push(line);
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    setInputFirstValue();
 }
 
 //delete line
@@ -269,6 +283,71 @@ function deleteLine() {
 
 // font
 function changeFont(font) {
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCurrLine.font = font;
+}
+
+//edit meme
+function editMeme(id) {
+    var meme = gMemes.find(meme => {
+        return meme.id === id;
+    });
+    console.log('meme :>> ', meme);
+    gMeme = _.cloneDeep(meme.meme);
+    gCurrLine = gMeme.lines[0];
+}
+// make id
+function _makeId(length = 5) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return txt;
+}
+
+function cleanGMeme() {
+    var meme = {
+        selectedImgId: 1,
+        selectedLineIdx: 0,
+
+        lines: [{
+                txt: '',
+                size: 30,
+                align: 'left',
+                color: 'white',
+                stroke: 'black',
+                textWidth: 0,
+                x: 0,
+                y: 40,
+                font: 'IMPACT',
+                isDrag: false,
+                everDragged: false
+            }, {
+                txt: '',
+                size: 30,
+                align: 'left',
+                color: 'white',
+                stroke: 'black',
+                textWidth: 0,
+                x: 0,
+                y: 160,
+                font: 'IMPACT',
+                isDrag: false,
+                everDragged: false
+            },
+            {
+                txt: '',
+                size: 30,
+                align: 'left',
+                color: 'white',
+                stroke: 'black',
+                textWidth: 0,
+                x: 0,
+                y: 300,
+                font: 'IMPACT',
+                isDrag: false
+            }
+        ]
+    };
+    gMeme = _.cloneDeep(meme);
 }

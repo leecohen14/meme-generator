@@ -29,7 +29,7 @@
     </header>
     <div class="main-container flex column justify-content align-center">
         <!-- <header class="main-layout">header</header> -->
-        <div class="gallery-container main-layout flex column" style="display:none">
+        <div class="gallery-container main-layout flex column">
             <section class="filter">
                 <input type="text" placeholder="Start typing" oninput="onSetFilter(this.value)" />
             </section>
@@ -37,18 +37,18 @@
         </div>
 
 
-        <div class="main-layout meme-editor flex align-center justify-content">
+        <div class="main-layout meme-editor flex align-center justify-content" style="display:none">
             <div class="canvas-container">
                 <canvas id="my-canvas" height="350" width="350"></canvas>
             </div>
             <div class="canvas-controlers">
-                <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)">
+                <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)" autocomplete="off">
                 <br>
                 <button class="btn switch" onclick="switchLine()"><img src="icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
                 <button class="btn add" onclick="onAddNewLine()"><img src="icons/add.png" alt=""></button>
                 <button class="btn delete" onclick="onDeleteLine()"><img src="icons/trash.png" alt=""></button>
-                <button class="btn lineDown fa fa-arrow-down" onclick="lineDown()"></button>
-                <button class="btn lineUp fa fa-arrow-up" onclick="lineUp()"></button>
+                <button class="btn lineDown" onclick="lineDown()"><img src="icons/arrow-down.png" alt=""></button>
+                <button class="btn lineUp" onclick="lineUp()"><img src="icons/arrow-up.png" alt=""></button>
 
                 <button class="btn increase" onclick="increaseText()"><img src="icons/increase font - icon.png" alt="">
                 </button>
@@ -59,12 +59,12 @@
 
                 <!-- <button class="btn font" onclick="switchLine()">F</button> -->
                 <select class="font" name="font" id="font" onchange="onChangeFont(this)">
-                    <option value="impact" >impact</option>
-                    <option value="righteous">righteous</option>
-                    <option value="arial">arial</option>
-                    <option value="tahoma">tahoma</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="helvetica">helvetica</option>
+                    <option value="impact">IMPACT</option>
+                    <option value="righteous">RIGHTEOUS</option>
+                    <option value="arial">ARIAL</option>
+                    <option value="tahoma">TAHOMA</option>
+                    <option value="Georgia">GEORGIA</option>
+                    <option value="helvetica">HELVETICA</option>
                 </select>
 
                 <button class="btn stroke">
@@ -78,7 +78,13 @@
                 <button class="btn stickers" onclick="switchLine()">stickers</button>
                 <button class="btn save" onclick="saveCanvas()"><img src="icons/save-icon.png" alt=""></button>
                 <button class="btn download" onclick="switchLine()"><a href="#" onclick="downloadCanvas(this)" download="file-name"><img src="icons/download.png" alt=""></a></button>
-                <button class="btn share" onclick="switchLine()"><img src="icons/share-icon.png" alt=""></button>
+
+
+                <form action="" class="share" method="POST" enctype="multipart/form-data" onclick="uploadImg(this, event)">
+                    <input name="img" id="imgData" type="hidden" />
+                    <img src="icons/share-icon.png" alt="">
+                </form>
+
 
             </div>
         </div>
@@ -91,9 +97,12 @@
 
     </div>
 
+    <script src="js/services/share-service.js"></script>
     <script src="js/services/storage-service.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="lodash.js"></script>
 </body>
 
 </html>

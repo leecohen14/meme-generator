@@ -29,9 +29,16 @@ ul {
     padding: 5px;
 }
 
-.canvas-controlers input,
-.canvas-controlers select {
+.canvas-controlers input {
     font-size: 20px;
+    border-radius: 8px;
+    border: none;
+    padding: 0;
+    padding: 10px;
+}
+
+.canvas-controlers select {
+    font-size: 18px;
     border-radius: 8px;
     border: none;
     padding: 0;
@@ -41,6 +48,10 @@ ul {
 button img {
     width: 70%;
     max-width: 37.09px;
+}
+
+img.meme:hover {
+    cursor: pointer;
 }
 
 
@@ -76,4 +87,24 @@ button img {
 
 .text-center {
     text-align: center;
+}
+
+
+/*imgs sizing*/
+
+.lineUp img {
+    height: 75%;
+    width: 45%;
+}
+
+.lineDown img {
+    height: 90%;
+    width: 70%;
+}
+
+
+/*fonts on select*/
+
+select.font {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }

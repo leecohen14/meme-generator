@@ -9,12 +9,6 @@
     border-radius: 2px;
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-gap: 10px;
-}
-
 .filter {
     margin-bottom: 15px;
 }
@@ -26,6 +20,32 @@
 
 .meme-editor {
     margin-top: 20px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-gap: 10px;
+}
+
+.memes-container {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-gap: 10px; */
+    margin: 20px;
+    text-align: center;
+}
+
+.memes-container img {
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    border-radius: 4px;
+}
+
+.memes-container img:hover,
+.gallery img:hover {
+    filter: brightness(130%);
 }
 
 .gallery-container {
@@ -63,6 +83,40 @@
     border-radius: 8px;
     /* width: 30px;
     height: 30px; */
+}
+
+.btn.delete {
+    background-color: rgb(250, 43, 43);
+}
+
+.btn.delete:hover {
+    background-color: rgb(126, 35, 35);
+}
+
+.btn.facebook:hover {
+    background-color: white;
+}
+
+form.share {
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+}
+
+form.share:hover {
+    background-color: rgb(57, 74, 226);
+}
+
+form.share img {
+    position: absolute;
+    height: 100%;
+    max-width: 100px;
+    width: 40%;
+    top: 0;
+    left: 30%
 }
 
 .btn:hover {

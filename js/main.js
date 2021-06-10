@@ -23,8 +23,8 @@ function onSetImg(id) {
 }
 
 function setInputFirstValue() {
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
-    var elInput = document.querySelector('input');
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    var elInput = document.querySelector('#line-text');
     if (gMeme.lines.length === 0) return;
     elInput.value = gCurrLine.txt;
 }
@@ -54,6 +54,8 @@ function showGallery() {
     var elGallery = document.querySelector('.gallery-container');
     elGallery.style.display = 'grid';
     hideEditor();
+    // cleanInput();
+    cleanGMeme();
 }
 
 function showEditor() {
@@ -89,14 +91,17 @@ function downloadCanvas(elLink) {
 function saveCanvas() {
     saveCanvasToStorage();
     renderMemes();
+    showMemes();
+    hideEditor();
+    cleanInput();
 }
 
 function renderMemes() {
     updateGMemes();
     var strHtml = ``;
     if (!gMemes) return;
-    gMemes.forEach(memeUrl => {
-        strHtml += ` <img src="${memeUrl}" alt="a" height="200" width="200"> `;
+    gMemes.forEach(meme => {
+        strHtml += ` <img class="meme" src="${meme.data}" alt="a" onclick="onEditMeme('${meme.id}'), showEditor(), hideMemes() " height="200" width="200"> `;
     })
     var elMemes = document.querySelector('.memes-container');
     elMemes.innerHTML = strHtml;
@@ -200,6 +205,7 @@ function onUpdateStroke(el) {
 // add new line
 function onAddNewLine() {
     addNewLine();
+    setInputFirstValue();
 }
 
 //delete line
@@ -212,4 +218,13 @@ function onChangeFont(el) {
     var font = el.value;
     changeFont(font);
     drawImg();
+}
+
+//clean input
+
+//edit meme
+function onEditMeme(id) {
+    editMeme(id);
+    drawImg();
+
 }
