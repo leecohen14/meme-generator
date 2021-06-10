@@ -98,6 +98,15 @@ function renderMemes() {
     elMemes.innerHTML = strHtml;
 }
 
+function toggleMenu() {
+    if (document.documentElement.clientWidth > 750) return; // to not toggle screen on mobile mode
+    document.body.classList.toggle('menu-open');
+}
+
+function closeScreen() {
+    var elScreen = document.querySelector('.main-screen');
+    elScreen.style.opacity = '0';
+}
 //drag and drop
 
 
@@ -108,8 +117,8 @@ function addMouseListeners() {
 }
 
 function addTouchListeners() {
-    gElCanvas.addEventListener('touchmove', onMove)
-    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchmove', onMove, { passive: true });
+    gElCanvas.addEventListener('touchstart', onDown, { passive: true })
     gElCanvas.addEventListener('touchend', onUp)
 }
 

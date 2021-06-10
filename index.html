@@ -15,12 +15,13 @@
 </head>
 
 <body onload="init()">
+    <div class="main-screen" onclick="toggleMenu()"></div>
     <header class="main-header flex justify-content">
         <div class="header-container main-layout flex space-between align-center">
-            <div class="logo">MEMEREATOR</div>
+            <div class="logo">MEME</div>
             <ul class="main-nav clean-list flex">
-                <li onclick="showGallery(), hideMemes()"><a href="#">Gallery</a></li>
-                <li onclick="showMemes()"><a href="#">Memes</a></li>
+                <li onclick="showGallery(), hideMemes(), toggleMenu()"><a href="#">Gallery</a></li>
+                <li onclick="showMemes(),toggleMenu()"><a href="#">Memes</a></li>
                 <li><a href="#">About</a></li>
             </ul>
             <button class="btn-menu" onclick="toggleMenu()">☰</button>

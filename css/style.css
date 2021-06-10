@@ -1,3 +1,8 @@
+@font-face {
+    font-family: righteous;
+    src: url(/fonts/Righteous-Regular.ttf);
+}
+
 #my-canvas {
     /* background-color: green; */
     /* text-align: left; */
@@ -11,7 +16,7 @@
 }
 
 #my-canvas {
-    background-color: rgb(235, 235, 235);
+    background-color: #fde5cc;
     margin-right: 30px;
 }
 
@@ -67,6 +72,11 @@
     font-size: 30px;
 }
 
+.btn-menu:hover {
+    cursor: pointer;
+    color: black;
+}
+
 
 /*grid areas*/
 
@@ -83,7 +93,7 @@
 
 .main-header .logo {
     color: white;
-    /* font-family: eurof, sans-serif; */
+    font-family: righteous, sans-serif;
     font-size: 2.5em;
 }
 
@@ -99,6 +109,7 @@
 .main-header .main-nav a {
     display: block;
     padding: 1.5em;
+    font-family: righteous, sans-serif;
     /* padding-left: 1.5em 1.5em 1.5em 0; */
     color: white;
     /* border-right: 2px solid #1d1d1d; */
@@ -123,6 +134,27 @@
     box-shadow: inset 0px -6px 0px 0px rgb(35, 221, 82);
 }
 
+body.menu-open .main-screen {
+    /* display: block; */
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.main-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    cursor: pointer;
+    /* display: none; */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .6s;
+    z-index: 1;
+}
+
 
 /*mobile only mnu*/
 
@@ -141,14 +173,31 @@
         width: 350px;
         height: 350px;
     }
-    .main-header .main-nav {
+    /* .main-header .main-nav {
         display: none;
-    }
+    } */
     .main-header {
         height: 60px;
     }
     .btn-menu {
         display: block;
+    }
+    .main-nav {
+        position: fixed;
+        right: 0;
+        top: 0;
+        /* height: 100vh; */
+        flex-direction: column;
+        /* border-inline-start: 1px solid #ccc; */
+        border-radius: 2px;
+        background-color: #f77f02;
+        width: 25%;
+        transform: translateX(100%);
+        transition: transform .6s;
+        z-index: 2;
+    }
+    body.menu-open .main-nav {
+        transform: translateX(0);
     }
 }
 
