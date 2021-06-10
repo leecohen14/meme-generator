@@ -11,8 +11,8 @@ function init() {
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
         // resizeCanvas()
-    drawImg();
     addListeners();
+    drawImg();
     renderMemes();
     // renderCanvas();
     // gElCanvas.textAlign = "center";
@@ -23,9 +23,10 @@ function onSetImg(id) {
 }
 
 function setInputFirstValue() {
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
     var elInput = document.querySelector('input');
     if (gMeme.lines.length === 0) return;
-    elInput.value = gMeme.lines[gMeme.selectedLineIdx].txt;
+    elInput.value = gCurrLine.txt;
 }
 
 function renderGalleryImgs() {
@@ -120,8 +121,8 @@ function addMouseListeners() {
 }
 
 function addTouchListeners() {
-    gElCanvas.addEventListener('touchmove', onMove, { passive: true });
-    gElCanvas.addEventListener('touchstart', onDown, { passive: true })
+    gElCanvas.addEventListener('touchmove', onMove /*,{ passive: true}*/ );
+    gElCanvas.addEventListener('touchstart', onDown /*,{ passive: true}*/ )
     gElCanvas.addEventListener('touchend', onUp)
 }
 
@@ -204,5 +205,11 @@ function onAddNewLine() {
 //delete line
 function onDeleteLine() {
     deleteLine();
+    drawImg();
+}
+
+function onChangeFont(el) {
+    var font = el.value;
+    changeFont(font);
     drawImg();
 }

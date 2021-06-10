@@ -29,7 +29,9 @@ ul {
     padding: 5px;
 }
 
-.canvas-controlers input {
+.canvas-controlers input,
+.canvas-controlers select {
+    font-size: 20px;
     border-radius: 8px;
     border: none;
     padding: 0;

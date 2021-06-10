@@ -56,7 +56,17 @@
                 <button class="btn left" onclick="switchLine()"><img src="icons/align-to-left.png" alt=""></button>
                 <button class="btn center" onclick="switchLine()"><img src="icons/center-text-alignment.png" alt=""></button>
                 <button class="btn right" onclick="switchLine()"><img src="icons/align-to-right.png" alt=""></button></button>
-                <button class="btn font" onclick="switchLine()">F</button>
+
+                <!-- <button class="btn font" onclick="switchLine()">F</button> -->
+                <select class="font" name="font" id="font" onchange="onChangeFont(this)">
+                    <option value="impact" >impact</option>
+                    <option value="righteous">righteous</option>
+                    <option value="arial">arial</option>
+                    <option value="tahoma">tahoma</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="helvetica">helvetica</option>
+                </select>
+
                 <button class="btn stroke">
                     <img src="icons/text stroke.png" alt="">
                     <input type="color" id="text-stroke" name="text-stroke" oninput="onUpdateStroke(this)">

@@ -34,6 +34,7 @@ var gMeme = {
             textWidth: 0,
             x: 0,
             y: 40,
+            font: 'IMPACT',
             isDrag: false,
             everDragged: false
         }, {
@@ -45,6 +46,7 @@ var gMeme = {
             textWidth: 0,
             x: 0,
             y: 160,
+            font: 'IMPACT',
             isDrag: false,
             everDragged: false
         },
@@ -57,6 +59,7 @@ var gMeme = {
             textWidth: 0,
             x: 0,
             y: 300,
+            font: 'IMPACT',
             isDrag: false
         }
     ]
@@ -89,7 +92,7 @@ function drawText() {
     gCtx.strokeStyle = gCurrLine.stroke;
     gCtx.fillStyle = gCurrLine.color;
     var gCurrLineSize = gCurrLine.size;
-    gCtx.font = `${gCurrLineSize}px IMPACT`;
+    gCtx.font = `${gCurrLineSize}px ${gCurrLine.font}`;
     // gCtx.textAlign = 'center'
     var gCurrLineText = gCurrLine.txt;
     gCurrLine.textWidth = gCtx.measureText(gCurrLineText).width;
@@ -121,7 +124,8 @@ function updateLineText(el) {
     var text = el.value;
     // get the curr meme id
     if (gMeme.lines.length === 0) return;
-    gMeme.lines[gMeme.selectedLineIdx].txt = text;
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
+    gCurrLine.txt = text;
     drawImg();
     // renderCanvas()
     // get into the specipied line
@@ -246,6 +250,7 @@ function addNewLine() {
         textWidth: 0,
         x: 0,
         y: 160,
+        font: 'IMPACT',
         isDrag: false,
         everDragged: false
     }
@@ -258,4 +263,12 @@ function addNewLine() {
 function deleteLine() {
     var idx = gMeme.selectedLineIdx;
     gMeme.lines.splice(idx, 1);
+    gMeme.selectedLineIdx--;
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
+}
+
+// font
+function changeFont(font) {
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    gCurrLine.font = font;
 }
