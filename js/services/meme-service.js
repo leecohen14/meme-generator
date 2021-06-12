@@ -19,7 +19,9 @@ var gImgs = [
     { id: 15, name: '1', url: 'img/15.jpg', keywords: ['happy'] },
     { id: 16, name: '1', url: 'img/16.jpg', keywords: ['happy'] },
     { id: 17, name: '1', url: 'img/17.jpg', keywords: ['happy'] },
-    { id: 18, name: '1', url: 'img/18.jpg', keywords: ['happy'] }
+    { id: 18, name: '1', url: 'img/18.jpg', keywords: ['happy'] },
+    { id: 19, name: '1', url: 'img/19.jpg', keywords: ['happy'] },
+    { id: 20, name: '1', url: 'img/20.jpg', keywords: ['happy'] }
 ];
 var gMeme = {
     selectedImgId: 1,
@@ -74,6 +76,7 @@ var gCurrLine;
 
 
 function drawImg() {
+    drawImageToSaveCanvas()
     var img = new Image()
     var currImgId = gMeme.selectedImgId;
     img.src = `img/${currImgId}.jpg`;
@@ -81,12 +84,62 @@ function drawImg() {
         clearCanvas();
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
             // drawText();
+        drawAllLinesBg();
         drawAllLines();
         setInputFirstValue();
     }
 }
 
+function drawImageToSaveCanvas() {
+    var img = new Image()
+    var currImgId = gMeme.selectedImgId;
+    img.src = `img/${currImgId}.jpg`;
+    img.onload = () => {
+        clearCanvas();
+        gCtxToSave.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+            // drawText();
+        drawAllLines();
+        setInputFirstValue();
+    }
+}
+
+function drawTextToSaveCanvas() {
+    if (gMeme.lines.length === 0) return;
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    gCtxToSave.lineWidth = 2
+    gCtxToSave.strokeStyle = gCurrLine.stroke;
+    gCtxToSave.fillStyle = gCurrLine.color;
+    var gCurrLineSize = gCurrLine.size;
+    gCtxToSave.font = `${gCurrLineSize}px ${gCurrLine.font}`;
+    // gCtx.textAlign = 'center'
+    var gCurrLineText = gCurrLine.txt;
+    gCurrLine.textWidth = gCtxToSave.measureText(gCurrLineText).width;
+    var gTextWidth = gCurrLine.textWidth;
+    var gCurrLineY = gCurrLine.y;
+    if (!gCurrLine.everDragged) {
+        gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
+    }
+    var gCurrLineX = gCurrLine.x;
+
+    gCtxToSave.fillText(gCurrLineText, gCurrLineX, gCurrLineY)
+    gCtxToSave.strokeText(gCurrLineText, gCurrLineX, gCurrLineY)
+        // console.log('gCurrLineY :>> ', gCurrLineY);
+        // if (gCurrLineText !== '') drawLineBgc(gCurrLineY, 20)
+}
+
+function drawLineBgc() {
+    // if (gCurrLine.txt === '') return;
+    var gCurrLineY = gCurrLine.y
+    gCtx.beginPath()
+    gCtx.rect(0, gCurrLineY - (gCurrLine.size * 0.8), gElCanvas.width, gCurrLine.size)
+    gCtx.fillStyle = '#d8cfc56b';
+    gCtx.fillRect(0, gCurrLineY - (gCurrLine.size * 0.8), gElCanvas.width, gCurrLine.size)
+    gCtx.strokeStyle = 'black'
+    gCtx.stroke()
+}
+
 function drawText() {
+    drawTextToSaveCanvas();
     if (gMeme.lines.length === 0) return;
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCtx.lineWidth = 2
@@ -106,13 +159,27 @@ function drawText() {
 
     gCtx.fillText(gCurrLineText, gCurrLineX, gCurrLineY)
     gCtx.strokeText(gCurrLineText, gCurrLineX, gCurrLineY)
+        // console.log('gCurrLineY :>> ', gCurrLineY);
+        // if (gCurrLineText !== '') drawLineBgc(gCurrLineY, 20)
 }
 
 function drawAllLines() {
     //run over all lines
     //do draw text
-    gMeme.lines.forEach(() => {
+    gMeme.lines.forEach((line) => {
         drawText();
+        if (gMeme.selectedLineIdx + 1 < gMeme.lines.length) {
+            gMeme.selectedLineIdx++;
+        } else {
+            gMeme.selectedLineIdx = 0;
+        }
+    })
+}
+
+function drawAllLinesBg() {
+    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
+    gMeme.lines.forEach((line) => {
+        drawLineBgc();
         if (gMeme.selectedLineIdx + 1 < gMeme.lines.length) {
             gMeme.selectedLineIdx++;
         } else {
@@ -186,7 +253,8 @@ function switchLine() {
 
 //save canvas to storage
 function saveCanvasToStorage() {
-    const data = gElCanvas.toDataURL();
+    console.log('donttttttt');
+    const data = gElCanvasToSave.toDataURL();
     var meme = {
         id: `${_makeId()}`,
         data,
