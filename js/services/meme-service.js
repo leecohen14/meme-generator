@@ -30,7 +30,7 @@ var gMeme = {
     lines: [{
             txt: '',
             size: 30,
-            align: 'left',
+            align: '',
             color: 'white',
             stroke: 'black',
             textWidth: 0,
@@ -42,7 +42,7 @@ var gMeme = {
         }, {
             txt: '',
             size: 30,
-            align: 'left',
+            align: '',
             color: 'white',
             stroke: 'black',
             textWidth: 0,
@@ -55,7 +55,7 @@ var gMeme = {
         {
             txt: '',
             size: 30,
-            align: 'left',
+            align: '',
             color: 'white',
             stroke: 'black',
             textWidth: 0,
@@ -73,10 +73,10 @@ var gFilterBy = {
 }
 var gCurrLine;
 //gMakeId
+var gSaveMode = false;
 
 
-function drawImg() {
-    drawImageToSaveCanvas()
+function drawImg(renderCanvasForSave) {
     var img = new Image()
     var currImgId = gMeme.selectedImgId;
     img.src = `img/${currImgId}.jpg`;
@@ -84,47 +84,13 @@ function drawImg() {
         clearCanvas();
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
             // drawText();
-        drawAllLinesBg();
+
+        if (!gSaveMode) drawAllLinesBg();
         drawAllLines();
         setInputFirstValue();
-    }
-}
+        if (gSaveMode) renderCanvasForSave();
 
-function drawImageToSaveCanvas() {
-    var img = new Image()
-    var currImgId = gMeme.selectedImgId;
-    img.src = `img/${currImgId}.jpg`;
-    img.onload = () => {
-        clearCanvas();
-        gCtxToSave.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-            // drawText();
-        drawAllLines();
-        setInputFirstValue();
     }
-}
-
-function drawTextToSaveCanvas() {
-    if (gMeme.lines.length === 0) return;
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
-    gCtxToSave.lineWidth = 2
-    gCtxToSave.strokeStyle = gCurrLine.stroke;
-    gCtxToSave.fillStyle = gCurrLine.color;
-    var gCurrLineSize = gCurrLine.size;
-    gCtxToSave.font = `${gCurrLineSize}px ${gCurrLine.font}`;
-    // gCtx.textAlign = 'center'
-    var gCurrLineText = gCurrLine.txt;
-    gCurrLine.textWidth = gCtxToSave.measureText(gCurrLineText).width;
-    var gTextWidth = gCurrLine.textWidth;
-    var gCurrLineY = gCurrLine.y;
-    if (!gCurrLine.everDragged) {
-        gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
-    }
-    var gCurrLineX = gCurrLine.x;
-
-    gCtxToSave.fillText(gCurrLineText, gCurrLineX, gCurrLineY)
-    gCtxToSave.strokeText(gCurrLineText, gCurrLineX, gCurrLineY)
-        // console.log('gCurrLineY :>> ', gCurrLineY);
-        // if (gCurrLineText !== '') drawLineBgc(gCurrLineY, 20)
 }
 
 function drawLineBgc() {
@@ -139,7 +105,6 @@ function drawLineBgc() {
 }
 
 function drawText() {
-    drawTextToSaveCanvas();
     if (gMeme.lines.length === 0) return;
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
     gCtx.lineWidth = 2
@@ -153,7 +118,10 @@ function drawText() {
     var gTextWidth = gCurrLine.textWidth;
     var gCurrLineY = gCurrLine.y;
     if (!gCurrLine.everDragged) {
-        gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
+        if (gCurrLine.align !== '') {
+            alignText();
+        } else gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
+
     }
     var gCurrLineX = gCurrLine.x;
 
@@ -253,14 +221,13 @@ function switchLine() {
 
 //save canvas to storage
 function saveCanvasToStorage() {
-    console.log('donttttttt');
-    const data = gElCanvasToSave.toDataURL();
+    const data = gElCanvas.toDataURL();
     var meme = {
         id: `${_makeId()}`,
         data,
         meme: _.cloneDeep(gMeme) //make deep copy
     }
-    gMemes.push(meme);
+    gMemes.unshift(meme);
     saveToStorage('memes', gMemes);
 }
 
@@ -325,7 +292,7 @@ function addNewLine() {
     var line = {
         txt: '',
         size: 30,
-        align: 'left',
+        align: '',
         color: 'white',
         stroke: 'black',
         textWidth: 0,
@@ -381,7 +348,7 @@ function cleanGMeme() {
         lines: [{
                 txt: '',
                 size: 30,
-                align: 'left',
+                align: '',
                 color: 'white',
                 stroke: 'black',
                 textWidth: 0,
@@ -406,7 +373,7 @@ function cleanGMeme() {
             {
                 txt: '',
                 size: 30,
-                align: 'left',
+                align: '',
                 color: 'white',
                 stroke: 'black',
                 textWidth: 0,
@@ -418,4 +385,20 @@ function cleanGMeme() {
         ]
     };
     gMeme = _.cloneDeep(meme);
+}
+
+//alignment
+
+function alignText() {
+    switch (gCurrLine.align) {
+        case 'left':
+            gCurrLine.x = 3;
+            break;
+        case 'right':
+            gCurrLine.x = gElCanvas.width - gCurrLine.textWidth - 3;
+            break;
+        case 'center':
+            gCurrLine.x = ((gElCanvas.width - gCurrLine.textWidth) / 2);
+            break;
+    }
 }

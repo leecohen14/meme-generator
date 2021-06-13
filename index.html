@@ -41,9 +41,6 @@
             <div class="canvas-container">
                 <canvas id="my-canvas" height="350" width="350"></canvas>
             </div>
-            <div class="canvas-container" style="display:none">
-                <canvas id="my-save-canvas" height="350" width="350"></canvas>
-            </div>
 
             <div class="canvas-controlers">
                 <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)" autocomplete="off">
@@ -57,9 +54,9 @@
                 <button class="btn increase" onclick="increaseText()"><img src="icons/increase font - icon.png" alt="">
                 </button>
                 <button class="btn decrease" onclick="decreaseText()"><img src="icons/decrease font - icon.png" alt=""></button>
-                <button class="btn left" onclick="switchLine()"><img src="icons/align-to-left.png" alt=""></button>
-                <button class="btn center" onclick="switchLine()"><img src="icons/center-text-alignment.png" alt=""></button>
-                <button class="btn right" onclick="switchLine()"><img src="icons/align-to-right.png" alt=""></button></button>
+                <button class="btn left" onclick="onAlignText('left')"><img src="icons/align-to-left.png" alt=""></button>
+                <button class="btn center" onclick="onAlignText('center')"><img src="icons/center-text-alignment.png" alt=""></button>
+                <button class="btn right" onclick="onAlignText('right')"><img src="icons/align-to-right.png" alt=""></button></button>
 
                 <!-- <button class="btn font" onclick="switchLine()">F</button> -->
                 <select class="font" name="font" id="font" onchange="onChangeFont(this)">

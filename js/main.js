@@ -1,9 +1,7 @@
 'use strict'
 console.log('work');
 var gElCanvas;
-var gElCanvasToSave;
 var gCtx;
-var gCtxToSave;
 var gStartPos;
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
 
@@ -12,8 +10,6 @@ function init() {
     renderGalleryImgs();
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
-    gElCanvasToSave = document.getElementById('my-save-canvas')
-    gCtxToSave = gElCanvasToSave.getContext('2d')
         // resizeCanvas()
     addListeners();
     drawImg();
@@ -93,12 +89,17 @@ function downloadCanvas(elLink) {
 }
 
 function saveCanvas() {
-    // drawImg();
+    gSaveMode = true;
+    drawImg(renderCanvasForSave);
+}
+
+function renderCanvasForSave() {
     saveCanvasToStorage();
     renderMemes();
     showMemes();
     hideEditor();
     cleanInput();
+    gSaveMode = false;
 }
 
 function renderMemes() {
@@ -232,4 +233,13 @@ function onEditMeme(id) {
     editMeme(id);
     drawImg();
 
+}
+
+//alignments
+
+function onAlignText(alignTo) {
+    console.log('alignTo :>> ', alignTo);
+    gCurrLine.align = alignTo;
+    alignText();
+    drawImg();
 }
