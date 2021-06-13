@@ -28,78 +28,33 @@ var gMeme = {
     selectedLineIdx: 0,
 
     lines: [{
-            txt: '',
-            size: 30,
-            align: '',
-            color: 'white',
-            stroke: 'black',
-            textWidth: 0,
-            x: 0,
-            y: 40,
-            font: 'IMPACT',
-            isDrag: false,
-            everDragged: false
-        }, {
-            txt: '',
-            size: 30,
-            align: '',
-            color: 'white',
-            stroke: 'black',
-            textWidth: 0,
-            x: 0,
-            y: 160,
-            font: 'IMPACT',
-            isDrag: false,
-            everDragged: false
-        },
-        {
-            txt: '',
-            size: 30,
-            align: '',
-            color: 'white',
-            stroke: 'black',
-            textWidth: 0,
-            x: 0,
-            y: 300,
-            font: 'IMPACT',
-            isDrag: false
-        }
-    ]
+        txt: '',
+        size: 30,
+        align: '',
+        color: 'white',
+        stroke: 'black',
+        textWidth: 0,
+        x: 0,
+        y: 40,
+        font: 'IMPACT',
+        isDrag: false,
+        everDragged: false
+    }]
 }
 var gMemes = [];
 var gGrabbedLine = '';
-var gFilterBy = {
-    txt: '',
-}
-var gCurrLine;
-//gMakeId
+
+var gCurrLine = gMeme.lines[0];
 var gSaveMode = false;
 
-
-function drawImg(renderCanvasForSave) {
-    var img = new Image()
-    var currImgId = gMeme.selectedImgId;
-    img.src = `img/${currImgId}.jpg`;
-    img.onload = () => {
-        clearCanvas();
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-            // drawText();
-
-        if (!gSaveMode) drawAllLinesBg();
-        drawAllLines();
-        setInputFirstValue();
-        if (gSaveMode) renderCanvasForSave();
-
-    }
-}
-
 function drawLineBgc() {
-    // if (gCurrLine.txt === '') return;
+    if (!gCurrLine) return;
+    // console.log('gCurrLine :>> ', gCurrLine);
     var gCurrLineY = gCurrLine.y
     gCtx.beginPath()
-    gCtx.rect(0, gCurrLineY - (gCurrLine.size * 0.8), gElCanvas.width, gCurrLine.size)
+    gCtx.rect(0, gCurrLineY - (gCurrLine.size * 0.8) - 4, gElCanvas.width, gCurrLine.size + 2)
     gCtx.fillStyle = '#d8cfc56b';
-    gCtx.fillRect(0, gCurrLineY - (gCurrLine.size * 0.8), gElCanvas.width, gCurrLine.size)
+    gCtx.fillRect(0, gCurrLineY - (gCurrLine.size * 0.8) - 4, gElCanvas.width, gCurrLine.size + 2)
     gCtx.strokeStyle = 'black'
     gCtx.stroke()
 }
@@ -112,42 +67,28 @@ function drawText() {
     gCtx.fillStyle = gCurrLine.color;
     var gCurrLineSize = gCurrLine.size;
     gCtx.font = `${gCurrLineSize}px ${gCurrLine.font}`;
-    // gCtx.textAlign = 'center'
     var gCurrLineText = gCurrLine.txt;
     gCurrLine.textWidth = gCtx.measureText(gCurrLineText).width;
     var gTextWidth = gCurrLine.textWidth;
     var gCurrLineY = gCurrLine.y;
+
     if (!gCurrLine.everDragged) {
         if (gCurrLine.align !== '') {
             alignText();
         } else gCurrLine.x = ((gElCanvas.width - gTextWidth) / 2); // update model
-
     }
     var gCurrLineX = gCurrLine.x;
 
     gCtx.fillText(gCurrLineText, gCurrLineX, gCurrLineY)
     gCtx.strokeText(gCurrLineText, gCurrLineX, gCurrLineY)
-        // console.log('gCurrLineY :>> ', gCurrLineY);
-        // if (gCurrLineText !== '') drawLineBgc(gCurrLineY, 20)
 }
 
 function drawAllLines() {
-    //run over all lines
-    //do draw text
-    gMeme.lines.forEach((line) => {
-        drawText();
-        if (gMeme.selectedLineIdx + 1 < gMeme.lines.length) {
-            gMeme.selectedLineIdx++;
-        } else {
-            gMeme.selectedLineIdx = 0;
-        }
-    })
-}
 
-function drawAllLinesBg() {
-    gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
-    gMeme.lines.forEach((line) => {
-        drawLineBgc();
+    if (!gSaveMode && !gDownloadMode) drawLineBgc();
+
+    gMeme.lines.forEach(() => {
+        drawText();
         if (gMeme.selectedLineIdx + 1 < gMeme.lines.length) {
             gMeme.selectedLineIdx++;
         } else {
@@ -165,57 +106,54 @@ function updateLineText(el) {
 
     if (gMeme.lines.length === 0) { // if has no lines!
         cleanInput();
+        alert('please add line!')
         return;
     }
     var text = el.value;
-    // get the curr meme id
     gCurrLine.txt = text;
-    drawImg();
-    // renderCanvas()
-    // get into the specipied line
-    //set text as the new text
-
+    renderCanvas();
 }
 
 function clearCanvas() {
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-        // You may clear part of the canvas
-        // gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height/4)
 }
 
 function setImg(id) {
     gMeme.selectedImgId = id;
-    drawImg();
 }
 
 function increaseText() {
     gMeme.lines[gMeme.selectedLineIdx].size += 5;
-    drawImg();
+    renderCanvas();
 }
 
 function decreaseText() {
     gMeme.lines[gMeme.selectedLineIdx].size -= 5;
-    drawImg();
+    renderCanvas();
 }
 
 function lineUp() {
     gMeme.lines[gMeme.selectedLineIdx].y -= 5;
-    drawImg();
+    renderCanvas();
 
 }
 
 function lineDown() {
     gMeme.lines[gMeme.selectedLineIdx].y += 5;
-    drawImg();
+    renderCanvas();
 }
 
 function switchLine() {
-    console.log('line switched');
     var linesLength = gMeme.lines.length;
+    if (linesLength === 1) {
+        alert('no more lines, add line on + button!');
+        return;
+    }
+    console.log('line switched');
     gMeme.selectedLineIdx = (gMeme.selectedLineIdx + 1 === linesLength) ? 0 : gMeme.selectedLineIdx + 1;
     //set grabbed line 
     // gGrabbedLine = gMeme.lines[gMeme.selectedLineIdx];
-    drawImg();
+    renderCanvas();
 
 }
 
@@ -249,6 +187,7 @@ function isLineClicked(clickedPos) {
 }
 
 function setLineDrag(isDrag) {
+    if (!gGrabbedLine) return;
     gGrabbedLine.isDrag = isDrag;
 }
 
@@ -302,6 +241,7 @@ function addNewLine() {
         isDrag: false,
         everDragged: false
     }
+    if (gMeme.lines.length === 1) line.y = 300;
     gMeme.lines.push(line);
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
@@ -312,7 +252,8 @@ function addNewLine() {
 function deleteLine() {
     var idx = gMeme.selectedLineIdx;
     gMeme.lines.splice(idx, 1);
-    gMeme.selectedLineIdx--;
+    if (gMeme.selectedLineIdx > 0) gMeme.selectedLineIdx--;
+
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
 }
 
@@ -326,7 +267,6 @@ function editMeme(id) {
     var meme = gMemes.find(meme => {
         return meme.id === id;
     });
-    console.log('meme :>> ', meme);
     gMeme = _.cloneDeep(meme.meme);
     gCurrLine = gMeme.lines[0];
 }
@@ -346,43 +286,18 @@ function cleanGMeme() {
         selectedLineIdx: 0,
 
         lines: [{
-                txt: '',
-                size: 30,
-                align: '',
-                color: 'white',
-                stroke: 'black',
-                textWidth: 0,
-                x: 0,
-                y: 40,
-                font: 'IMPACT',
-                isDrag: false,
-                everDragged: false
-            }, {
-                txt: '',
-                size: 30,
-                align: 'left',
-                color: 'white',
-                stroke: 'black',
-                textWidth: 0,
-                x: 0,
-                y: 160,
-                font: 'IMPACT',
-                isDrag: false,
-                everDragged: false
-            },
-            {
-                txt: '',
-                size: 30,
-                align: '',
-                color: 'white',
-                stroke: 'black',
-                textWidth: 0,
-                x: 0,
-                y: 300,
-                font: 'IMPACT',
-                isDrag: false
-            }
-        ]
+            txt: '',
+            size: 30,
+            align: '',
+            color: 'white',
+            stroke: 'black',
+            textWidth: 0,
+            x: 0,
+            y: 40,
+            font: 'IMPACT',
+            isDrag: false,
+            everDragged: false
+        }]
     };
     gMeme = _.cloneDeep(meme);
 }
@@ -401,4 +316,12 @@ function alignText() {
             gCurrLine.x = ((gElCanvas.width - gCurrLine.textWidth) / 2);
             break;
     }
+}
+
+function deleteMeme(memeId) {
+    var idx = gMemes.findIndex((meme) => {
+        return (meme.id === memeId)
+    })
+    gMemes.splice(idx, 1);
+    saveToStorage('memes', gMemes);
 }

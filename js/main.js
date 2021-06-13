@@ -3,23 +3,49 @@ console.log('work');
 var gElCanvas;
 var gCtx;
 var gStartPos;
+var gElLink;
+var gDownloadMode = false;
+var gFilterBy = {
+    txt: '',
+}
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
 
 
 function init() {
     renderGalleryImgs();
+    createCanvas();
+    addListeners();
+    // resizeCanvas()
+    renderCanvas();
+    renderMemes();
+}
+
+function renderCanvas(renderCanvasForSave, renderCanvasForDownload) {
+    var img = new Image()
+    var currImgId = gMeme.selectedImgId;
+    // img.src = `img/${currImgId}.jpg`;
+    img.src = gImgs.find((img) => {
+        return img.id === currImgId;
+    }).url;
+    img.onload = () => {
+        clearCanvas();
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+            // drawAllLinesBg();
+        drawAllLines();
+        setInputFirstValue();
+        if (gSaveMode) renderCanvasForSave();
+        if (gDownloadMode) renderCanvasForDownload();
+    }
+}
+
+function createCanvas() {
     gElCanvas = document.getElementById('my-canvas')
     gCtx = gElCanvas.getContext('2d')
-        // resizeCanvas()
-    addListeners();
-    drawImg();
-    renderMemes();
-    // renderCanvas();
-    // gElCanvas.textAlign = "center";
 }
 
 function onSetImg(id) {
     setImg(id);
+    renderCanvas();
 }
 
 function setInputFirstValue() {
@@ -30,17 +56,12 @@ function setInputFirstValue() {
 }
 
 function renderGalleryImgs() {
-    //run all over the gImgs
-    // inject img tags with all imgs
-
     var images = getImages();
     var elGallery = document.querySelector('.gallery');
     var strHtml = '';
     images.forEach((img) => {
-            // ` <img src="${img.url}" alt="" onclick="onSetImg(1)"> `;
-            strHtml += `<img src="${img.url}" alt="" onclick="onSetImg(${img.id}),showEditor()">`;
-        })
-        // console.log('strHtml :>> ', strHtml);
+        strHtml += `<img src="${img.url}" alt="" onclick="onSetImg(${img.id}),showEditor()">`;
+    })
     elGallery.innerHTML = strHtml;
 }
 
@@ -54,7 +75,6 @@ function showGallery() {
     var elGallery = document.querySelector('.gallery-container');
     elGallery.style.display = 'grid';
     hideEditor();
-    // cleanInput();
     cleanGMeme();
 }
 
@@ -73,7 +93,7 @@ function showMemes() {
     hideEditor();
     hideGallery();
     var elMemes = document.querySelector('.memes-container');
-    elMemes.style.display = 'block';
+    elMemes.style.display = 'grid';
 }
 
 function hideMemes() {
@@ -82,15 +102,25 @@ function hideMemes() {
 }
 
 function downloadCanvas(elLink) {
+    gDownloadMode = true;
+    gElLink = elLink;
+    renderCanvas(renderCanvasForSave, renderCanvasForDownload);
+
+}
+
+function renderCanvasForDownload() {
     const data = gElCanvas.toDataURL()
-    console.log('DATA', data);
+    var elLink = document.querySelector('.download-link');
     elLink.href = data
     elLink.download = 'puki'
+    gDownloadMode = false;
+
+
 }
 
 function saveCanvas() {
     gSaveMode = true;
-    drawImg(renderCanvasForSave);
+    renderCanvas(renderCanvasForSave);
 }
 
 function renderCanvasForSave() {
@@ -107,7 +137,11 @@ function renderMemes() {
     var strHtml = ``;
     if (!gMemes) return;
     gMemes.forEach(meme => {
-        strHtml += ` <img class="meme" src="${meme.data}" alt="a" onclick="onEditMeme('${meme.id}'), showEditor(), hideMemes() " height="200" width="200"> `;
+        strHtml += ` <div class="meme-container">    
+        <button class="btn delete-meme" onclick="onDeleteMeme('${meme.id}')">X</button>
+        <img class="meme" src="${meme.data}" alt="a" onclick="onEditMeme('${meme.id}'), showEditor(), hideMemes() " height="200" width="200">
+        </div>
+        `;
     })
     var elMemes = document.querySelector('.memes-container');
     elMemes.innerHTML = strHtml;
@@ -158,13 +192,9 @@ function onMove(ev) {
         const pos = getEvPos(ev)
         const dx = pos.x - gStartPos.x
         const dy = pos.y - gStartPos.y
-            // console.log('dx :>> ', dx);
-            // console.log('dy :>> ', dy);
         moveLine(dx, dy)
         gStartPos = pos
-            // renderCanvas();
-            // drawAllLines();
-        drawImg();
+        renderCanvas();
     }
 }
 
@@ -192,7 +222,6 @@ function getEvPos(ev) {
 //filter
 
 function onSetFilter(txt) {
-    console.log('set');
     setFilter({ txt: txt })
     renderGalleryImgs();
 }
@@ -200,46 +229,86 @@ function onSetFilter(txt) {
 //color
 function onUpdateColor(el) {
     updateColor(el.value);
-    drawImg();
+    renderCanvas();
 }
 
 function onUpdateStroke(el) {
     updateStroke(el.value);
-    drawImg();
+    renderCanvas();
 }
 
 // add new line
 function onAddNewLine() {
     addNewLine();
+    renderCanvas();
     setInputFirstValue();
 }
 
 //delete line
 function onDeleteLine() {
     deleteLine();
-    drawImg();
+    cleanInput();
+    renderCanvas();
 }
 
 function onChangeFont(el) {
     var font = el.value;
     changeFont(font);
-    drawImg();
+    renderCanvas();
 }
 
-//clean input
 
 //edit meme
 function onEditMeme(id) {
     editMeme(id);
-    drawImg();
+    renderCanvas();
 
 }
 
 //alignments
-
 function onAlignText(alignTo) {
-    console.log('alignTo :>> ', alignTo);
     gCurrLine.align = alignTo;
     alignText();
-    drawImg();
+    renderCanvas();
+}
+
+//delete meme
+function onDeleteMeme(memeId) {
+    deleteMeme(memeId);
+    renderMemes();
+}
+
+//choce file
+
+function renderImg(img) {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
+}
+
+function onImgInput(ev) {
+    loadImageFromInput(ev, renderImg)
+}
+
+function loadImageFromInput(ev, onImageReady) {
+    // document.querySelector('.share-container').innerHTML = ''
+    var reader = new FileReader()
+
+    reader.onload = function(event) {
+        var img = new Image()
+        img.onload = onImageReady.bind(null, img)
+        img.src = event.target.result
+        gImgs.push({ id: _makeId(), name: 'aviv2', url: img.src, keywords: ['happy'] },
+
+        )
+        gMeme.selectedImgId = gImgs[gImgs.length - 1].id;
+        clearCanvas();
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+            // drawAllLinesBg();
+        drawAllLines();
+        setInputFirstValue();
+        if (gSaveMode) renderCanvasForSave();
+        if (gDownloadMode) renderCanvasForDownload();
+        showEditor();
+    }
+
+    reader.readAsDataURL(ev.target.files[0])
 }

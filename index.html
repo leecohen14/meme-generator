@@ -30,8 +30,9 @@
     <div class="main-container flex column justify-content align-center">
         <!-- <header class="main-layout">header</header> -->
         <div class="gallery-container main-layout flex column">
-            <section class="filter">
+            <section class="filter flex space-between">
                 <input type="text" placeholder="Start typing" oninput="onSetFilter(this.value)" />
+                <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
             </section>
             <div class="main-layout gallery"></div>
         </div>
@@ -45,21 +46,21 @@
             <div class="canvas-controlers">
                 <input type="text" id="line-text" name="line-text" placeholder="enter text" onInput="updateLineText(this)" autocomplete="off">
                 <br>
-                <button class="btn switch" onclick="switchLine()"><img src="icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
-                <button class="btn add" onclick="onAddNewLine()"><img src="icons/add.png" alt=""></button>
-                <button class="btn delete" onclick="onDeleteLine()"><img src="icons/trash.png" alt=""></button>
-                <button class="btn lineDown" onclick="lineDown()"><img src="icons/arrow-down.png" alt=""></button>
-                <button class="btn lineUp" onclick="lineUp()"><img src="icons/arrow-up.png" alt=""></button>
+                <button class="btn switch" onclick="switchLine()" title="switch line"><img src="icons/up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
+                <button class="btn add" onclick="onAddNewLine()" title="add new line"><img src="icons/add.png" alt=""></button>
+                <button class="btn delete" onclick="onDeleteLine()" title="delete line"><img src="icons/trash.png" alt=""></button>
+                <button class="btn lineDown" onclick="lineDown()" title="move line down"><img src="icons/arrow-down.png" alt=""></button>
+                <button class="btn lineUp" onclick="lineUp()" title="move line up"><img src="icons/arrow-up.png" alt=""></button>
 
-                <button class="btn increase" onclick="increaseText()"><img src="icons/increase font - icon.png" alt="">
+                <button class="btn increase" onclick="increaseText()" title="increase text"><img src="icons/increase font - icon.png" alt="">
                 </button>
-                <button class="btn decrease" onclick="decreaseText()"><img src="icons/decrease font - icon.png" alt=""></button>
-                <button class="btn left" onclick="onAlignText('left')"><img src="icons/align-to-left.png" alt=""></button>
-                <button class="btn center" onclick="onAlignText('center')"><img src="icons/center-text-alignment.png" alt=""></button>
-                <button class="btn right" onclick="onAlignText('right')"><img src="icons/align-to-right.png" alt=""></button></button>
+                <button class="btn decrease" onclick="decreaseText()" title="decrease text"><img src="icons/decrease font - icon.png" alt=""></button>
+                <button class="btn left" onclick="onAlignText('left')" title="align left"><img src="icons/align-to-left.png" alt=""></button>
+                <button class="btn center" onclick="onAlignText('center')" title="align center"><img src="icons/center-text-alignment.png" alt=""></button>
+                <button class="btn right" onclick="onAlignText('right')" title="align right"><img src="icons/align-to-right.png" alt=""></button></button>
 
                 <!-- <button class="btn font" onclick="switchLine()">F</button> -->
-                <select class="font" name="font" id="font" onchange="onChangeFont(this)">
+                <select class="font" name="font" id="font" onchange="onChangeFont(this)" title="chose font">
                     <option value="impact">IMPACT</option>
                     <option value="righteous">RIGHTEOUS</option>
                     <option value="arial">ARIAL</option>
@@ -68,17 +69,17 @@
                     <option value="helvetica">HELVETICA</option>
                 </select>
 
-                <button class="btn stroke">
+                <button class="btn stroke" title="change stroke">
                     <img src="icons/text stroke.png" alt="">
                     <input type="color" id="text-stroke" name="text-stroke" oninput="onUpdateStroke(this)">
                 </button>
-                <button class="btn color">
+                <button class="btn color" title="change color">
                     <img src="icons/paint-board-and-brush.png" alt="">
                     <input type="color" id="text-color" name="text-color" oninput="onUpdateColor(this)">
                 </button>
-                <button class="btn stickers" onclick="switchLine()">stickers</button>
-                <button class="btn save" onclick="saveCanvas()"><img src="icons/save-icon.png" alt=""></button>
-                <button class="btn download" onclick="switchLine()"><a href="#" onclick="downloadCanvas(this)" download="file-name"><img src="icons/download.png" alt=""></a></button>
+                <button class="btn stickers" title="add stickers">stickers</button>
+                <button class="btn save" onclick="saveCanvas()" title="save meme"><img src="icons/save-icon.png" alt=""></button>
+                <button class="btn download" title="download these meme"><a class="download-link" href="#" onclick="downloadCanvas(this)" ><img src="icons/download.png" alt=""></a></button>
 
 
                 <form action="" class="share" method="POST" enctype="multipart/form-data" onclick="uploadImg(this, event)">
